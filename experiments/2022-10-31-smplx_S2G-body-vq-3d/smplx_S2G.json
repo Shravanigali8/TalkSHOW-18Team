@@ -1,0 +1,89 @@
+{
+  "config_root_path": "/is/cluster/scratch/hyi/ExpressiveBody/SMPLifyX4/scripts",
+  "dataset_load_mode": "pickle",
+  "store_file_path": "store.pkl",
+  "smplx_npz_path": "visualise/smplx_model/SMPLX_NEUTRAL_2020.npz",
+  "extra_joint_path": "visualise/smplx_model/smplx_extra_joints.yaml",
+  "j14_regressor_path": "visualise/smplx_model/SMPLX_to_J14.pkl",
+  "param": {
+    "w_j": 1,
+    "w_b": 1,
+    "w_h": 1
+  },
+  "Data": {
+    "data_root": "../../expressive_body-V0.7/",
+    "pklname": "_3d_ta_body_mfcc_4p.pkl",
+    "pose": {
+      "normalization": false,
+      "convert_to_6d": false,
+      "norm_method": "all",
+      "augmentation": false,
+      "generate_length": 88,
+      "pre_pose_length": 0,
+      "pose_dim": 99,
+      "expression": true
+    },
+    "aud": {
+      "feat_method": "mfcc",
+      "aud_feat_dim": 64,
+      "aud_feat_win_size": null,
+      "context_info": false
+    }
+  },
+  "Model": {
+    "model_type": "body",
+    "model_name": "s2g_body_vq",
+    "composition": true,
+    "code_num": 2048,
+    "bh_model": false,
+    "AudioOpt": "Adam",
+    "encoder_choice": "mfcc",
+    "operation_kernel": "rnn",
+    "interaction": "concat",
+    "rnn_cell": "gru",
+    "T_layer_norm": true,
+    "bidirectional": true,
+    "residual": true,
+    "use_template": true,
+    "template_length": 64,
+    "gan": false,
+    "separate": true,
+    "l1_joints": false,
+    "radianloss": true
+  },
+  "DataLoader": {
+    "batch_size": 128,
+    "num_workers": 8
+  },
+  "Train": {
+    "epochs": 100,
+    "max_gradient_norm": 5,
+    "recon_input": true,
+    "learning_rate": {
+      "generator_learning_rate": 1e-4,
+      "discriminator_learning_rate": 1e-4
+    },
+    "weights": {
+      "kl_tolerance": 0.02,
+      "velocity_length": 10,
+      "keypoint_loss_weight": 1,
+      "recon_input_weight": 1,
+      "kl_loss_weight": 0.2,
+      "kl_start_weight": 1e-5,
+      "kl_decay_rate": 0.9995,
+      "vel_loss_weight": 1,
+      "vel_start_weight": 1e-5,
+      "vel_decay_rate": 0.99995,
+      "r_loss_weight": 1,
+      "zero_loss_weight": 0,
+      "gan_loss_weight": 0.1,
+      "k": 1.0
+    }
+  },
+  "Log": {
+    "save_every": 50,
+    "print_every": 400,
+    "name": "body-vq-composition2048"
+  }
+}
+  
